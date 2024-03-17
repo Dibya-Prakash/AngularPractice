@@ -66,5 +66,21 @@ namespace Employee.API.Controllers
 
         }
 
+        [HttpDelete]
+        [Route("delete/{id:Guid}")]
+        public  IActionResult DeleteEmployee([FromRoute] Guid id)
+        {
+            var employee = _employeeDbContext.Employees.FirstOrDefault(x => x.Id==id);
+            if (employee == null)
+            {
+                return NotFound();
+            }
+            _employeeDbContext.Employees.Remove(employee);
+            _employeeDbContext.SaveChanges();
+
+            return Ok();
+            
+        }
+
     }
 }
